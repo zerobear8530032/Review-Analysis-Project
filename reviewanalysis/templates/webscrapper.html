@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Review Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='scrapper.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">ReviewAnalysis</div>
+            <ul>
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li><a href="{{url_for('aboutus')}}">About Us</a></li>
+                <li><a href="{{url_for('service')}}">Services</a></li>
+                <li><a href="{{url_for('contactus')}}">Contact Us</a></li>
+                <li><a href="{{url_for('api')}}">API</a></li>
+                {%if current_user.is_authenticated%}
+                <li><a href="{{url_for('scrapper')}}">Web Scrapper</a></li>
+                <li><a href="{{url_for('logout')}}">Log out</a></li>
+                {%else%}
+                <li><a href="{{url_for('register')}}">Register</a></li>
+                <li><a href="{{url_for('login')}}">Login</a></li>
+                {%endif%}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <header>
+            <h1>Analyze Your Product in Seconds!</h1>
+            <p>Enter the URL of the product page you want to analyze</p>
+        </header>
+        <main>
+            <div class="content-section">
+                {% with messages=get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+          
+            <form action="" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="input-section">
+                    {{ form.product_link(class="input", placeholder="Paste product link here...") }}
+                    {{ form.submit(class="button ") }}
+                </div>
+                <div class="invalid-feedback">
+                    {% for error in form.product_link.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>       
+            </form>
+        </main>
+        <section class="output">
+            {% if output %}
+            {% if output == "Positive" %}
+            <span id="positive">{{output}}</span>
+            {% elif output == "Neutral" %}
+            <span id="neutral">{{output}}</span>
+            {% elif output == "Negative" %}
+            <span id="negative">{{output}}</span>
+            {% endif %}
+            {% endif %}
+        </section>
+        
+        <footer>
+            <p>Popular Products Analyzed</p>
+        </footer>
+    </div>
+    
+    <section>
+        {% if error %}
+        <p>{{error}}</p>
+        {% endif %}
+    </section>
+
+    <div class="plots">
+        {% if rating_dict %}
+        <section id="percent">
+            <h2>Review Distribution</h2>
+            <canvas id="reviewchart"></canvas>
+            <script>
+                var chartData = {{ rating_dict | tojson }};
+                var labels = chartData.map(item => item.label);
+                var data = chartData.map(item => item.value);
+                var ctx = document.getElementById('reviewchart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Review Distribution',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+            {% endif %}
+        </section>
+        
+        {% if per_dict %}
+        <section id="review">
+            <h2>Review Percent(%) Distribution</h2>
+            <canvas id="percentchart"></canvas>
+            <script>
+                var chartData = {{ per_dict | tojson }};
+                var labels = chartData.map(item => item.label);
+                var data = chartData.map(item => item.value);
+                var ctx = document.getElementById('percentchart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Reviews %',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+            {% endif %}
+        </section>
+
+        {% if prob_dict %}
+        <section id="model">
+            <h2>Model Class Relation Distribution</h2>
+            <canvas id="modelchart"></canvas>
+            <script>
+                var chartData = {{ prob_dict | tojson }};
+                var labels = chartData.map(item => item.label);
+                var data = chartData.map(item => item.value);
+                var ctx = document.getElementById('modelchart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Reviews %',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+            {% endif %}
+        </section>
+    </div>
+
+    
+</body>
+</html>

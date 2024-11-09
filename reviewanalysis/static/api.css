@@ -1,0 +1,119 @@
+body {
+background-color: #121212;
+color: #ffffff;
+font-family: 'Arial', sans-serif;
+display: flex;
+height: 100vh;
+margin: 0;
+}
+.container {
+flex: 1;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.content {
+background-color: #1e1e1e;
+padding: 40px;
+border-radius: 10px;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+text-align: center;
+max-width: 400px;
+width: 100%;
+}
+h1 {
+margin-bottom: 20px;
+font-size: 24px;
+}
+p {
+margin-bottom: 30px;
+line-height: 1.5;
+}
+#submitbutton {
+    background-color: #6200ea;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+#submitbutton:hover {
+    background-color: #3700b3;
+    transform: translateY(-2px);
+}
+#submitbutton:active {
+    transform: translateY(0);
+}
+
+.api-key {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+.navbar {
+background-color: #1e1e1e;
+padding: 20px;
+width: 200px;
+box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
+height: 100%;
+position: fixed;
+right: 0;
+top: 0;
+border-radius: 0 10px 10px 0;
+}
+.navbar a {
+color: #ffffff;
+text-decoration: none;
+display: block;
+padding: 10px;
+transition: background-color 0.3s;
+}
+.navbar a:hover {
+background-color: #3700b3;
+}
+footer {
+margin-top: 20px;
+font-size: 14px;
+color: #bbb;
+}
+
+
+
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    transition: opacity 0.3s ease; /* Smooth transition for visibility */
+}
+
+.alert-info {
+    background-color: #3a506b; /* Dark blue background */
+    color: #dbe2ef; /* Light text color */
+    border: 1px solid #2d4059; /* Slightly darker border */
+}
+
+.alert-success {
+    background-color: #2e7d32; /* Dark green background */
+    color: #e8f5e9; /* Light text color */
+    border: 1px solid #1b5e20; /* Darker green border */
+}
+
+.alert-warning {
+    background-color: #b28704; /* Dark yellow background */
+    color: #fff3e0; /* Light text color */
+    border: 1px solid #8e6a00; /* Darker yellow border */
+}
+
+.alert-danger {
+    background-color: rgba(148, 39, 39, 0.8); /* Dark red background */
+    color: #ffebee; /* Light text color */
+    border: 1px solid #833a3a; /* Darker red border */
+}
+
+/* Optional: Add a hover effect to alerts */
+.alert:hover {
+    opacity: 0.9; /* Slightly fade on hover */
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Key Management</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='api.css')}}" />
+    
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="content">
+            <div class="content-section">
+                {% with messages=get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>          
+            <h1>API Key Management</h1>
+            <p>Welcome to the API Key Management page. Here you can manage your API keys effectively and securely.</p>
+        <form action="" method="POST">
+          {{form.hidden_tag()}}
+          {{ form.submit(id="submitbutton", label="Manage API Keys") }}
+        </form>  
+        {%if api_key%}
+        <p class ="api-key"><span>Here is your New API : {{api_key}}</span></p>
+        {%endif%}
+            <footer>
+                &copy; 2024 Your Company Name. All rights reserved.
+            </footer>
+        </div>
+    </div>
+    <nav class="navbar">
+        <h3>Navigation</h3>
+        <a href="{{url_for('home')}}">Home</a>
+        <a href="{{url_for('manageapi')}}">API Keys</a>
+        <a href="{{url_for('api')}}">Generate API</a>
+        <a href="{{url_for('document')}}">Documentation</a>
+        <a href="{{url_for('service')}}">Services</a>
+    </nav>
+</body>
+</html>

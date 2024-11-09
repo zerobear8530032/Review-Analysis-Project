@@ -1,0 +1,157 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif; /* Font family */
+    background-color: #121212; /* Dark background for the body */
+    color: #e0e0e0; /* Light text color */
+    margin: 0;
+    padding: 0;
+}
+
+
+header {
+    background-color: #1e1e1e; /* Dark background for header */
+    padding: 20px 0; /* Padding for header */
+}
+
+.navbar {
+    display: flex; /* Flexbox for navigation */
+    justify-content: space-between; /* Space between logo and links */
+    align-items: center; /* Center items vertically */
+    max-width: 1200px; /* Max width for the navbar */
+    margin: 0 auto; /* Center navbar */
+    padding: 0 20px; /* Padding for navbar */
+}
+
+.logo {
+    font-size: 1.8em; /* Logo font size */
+    color: #4a90e2; /* Logo color */
+}
+
+.navbar ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    display: flex; /* Flexbox for navigation links */
+    gap: 20px; /* Space between links */
+}
+
+.navbar a {
+    text-decoration: none; /* Remove underline from links */
+    color: #b0bec5; /* Link color */
+    transition: color 0.3s; /* Smooth color transition */
+}
+
+.navbar a:hover {
+    color: #4a90e2; /* Change color on hover */
+}
+
+/* Container Styles */
+.container {
+    max-width: 800px; /* Max width for content */
+    margin: 50px auto; /* Center container */
+    padding: 20px; /* Padding for container */
+    background-color: #1e1e1e; /* Dark background for container */
+    border-radius: 10px; /* Rounded corners box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+}
+
+/* Header Styles */
+header h1 {
+    font-size: 2.5em; /* Larger font size for main title */
+    color: #4a90e2; /* Main color */
+    margin-bottom: 10px; /* Space below title */
+}
+
+header p {
+    color: #b0bec5; /* Light grey for subtitle */
+    font-size: 1.2em; /* Increased font size */
+}
+
+/* Form Styles */
+form {
+    display: flex; /* Flexbox for form layout */
+    flex-direction: column; /* Stack form elements vertically */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Space between form groups */
+}
+
+label {
+    font-weight: bold; /* Bold labels */
+    margin-bottom: 5px; /* Space below labels */
+}
+
+input, textarea {
+    width: 100%; /* Full width for inputs and textarea */
+    padding: 10px; /* Padding for inputs */
+    border: 1px solid #4a90e2; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #2c2c2c; /* Dark background for inputs */
+    color: #e0e0e0; /* Light text color */
+}
+
+input:focus, textarea:focus {
+    outline: none; /* Remove outline on focus */
+    border-color: #4a90e2; /* Change border color on focus */
+}
+
+#button {
+    padding: 10px 15px; 
+    background-color: #4a90e2; 
+    color: #fff; 
+    border: none; 
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+#button:hover {
+    background-color: #357ab8; /* Darker shade on hover */
+}
+
+/* Footer Styles */
+footer {
+    margin-top: 20px; /* Space above footer */
+    padding: 10px 0; /* Padding for footer */
+    background-color: #1e1e1e; /* Dark background for footer */
+    text-align: center; /* Centered text */
+    color: #888; /* Light grey for footer text */
+}
+
+
+.alert {
+padding: 15px;
+border-radius: 5px;
+margin-bottom: 20px;
+font-size: 1.1em;
+transition: opacity 0.3s ease; /* Smooth transition for visibility */
+}
+
+.alert-info {
+background-color: #3a506b; /* Dark blue background */
+color: #dbe2ef; /* Light text color */
+border: 1px solid #2d4059; /* Slightly darker border */
+}
+
+.alert-success {
+background-color: #2e7d32; /* Dark green background */
+color: #e8f5e9; /* Light text color */
+border: 1px solid #1b5e20; /* Darker green border */
+}
+
+.alert-warning {
+background-color: #b28704; /* Dark yellow background */
+color: #fff3e0; /* Light text color */
+border: 1px solid #8e6a00; /* Darker yellow border */
+}
+
+.alert-danger {
+background-color: rgba(148, 39, 39, 0.8); /* Dark red background */
+color: #ffebee; /* Light text color */
+border: 1px solid #833a3a; /* Darker red border */
+}
+
+/* Optional: Add a hover effect to alerts */
+.alert:hover {
+opacity: 0.9; /* Slightly fade on hover */
+}
+  

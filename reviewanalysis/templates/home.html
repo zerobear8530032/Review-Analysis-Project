@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Analysis Project</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='home.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="{{url_for('static',filename='images/logo.webp')}}" style="width: 80px; height: auto;" alt="Logo">
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    <li><a href="{{url_for('aboutus')}}">About Us</a></li>
+                    <li><a href="{{url_for('service')}}">Services</a></li>
+                    <li><a href="{{url_for('contactus')}}">Contact Us</a></li>
+                    <li><a href="{{url_for('api')}}">API</a></li>
+                    {%if current_user.is_authenticated%}
+                    <li><a href="{{url_for('scrapper')}}">Web Scrapper</a></li>
+                    <li><a href="{{url_for('logout')}}">Log out</a></li>
+                    {%else%}
+                    <li><a href="{{url_for('register')}}">Register</a></li>
+                    <li><a href="{{url_for('login')}}">Login</a></li>
+                    {%endif%}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Transforming Reviews into Insights</h1>
+        </div>
+    </section>
+    
+
+    <!-- About Us Section -->
+    <section class="mid">
+        <section id="about" class="section">
+            <div class="container">
+                <h2>About Us</h2>
+                <p>We are dedicated to providing businesses with comprehensive review analysis solutions to enhance customer satisfaction and drive growth.</p>
+                <a href="{{url_for('aboutus')}}" class="cta-button">Learn More</a>
+            </div>
+        </section>
+        
+        <!-- Services Section -->
+        <section id="services" class="section">
+            <div class="container">
+                <h2>Our Services</h2>
+                <div class="service-list">
+                    <div class="service">
+                        <h3>Sentiment Analysis</h3>
+                        <p>Understand customer emotions through text analysis.</p>
+                    </div>
+                    <div class="service">
+                        <h3>Competitor Benchmarking</h3>
+                        <p>Compare your reviews against competitors.</p>
+                    </div>
+                    <div class="service">
+                        <h3>Custom Reports</h3>
+                        <p>Tailored insights based on your specific needs.</p>
+                        <a href="{{url_for('service')}}" class="cta-button">Explore Our Services</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- Review Analysis Section -->
+    <section class="bottom">
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="section">
+            <div class="container">
+                <h2>What Our Clients Say</h2>
+                <blockquote>"This service transformed our understanding of customer feedback!" - Abdul saboor</blockquote>
+                <blockquote>"The insights we gained were invaluable for our business." - ZeroBear</blockquote>
+            </div>
+        </section>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#faq">FAQ</a>
+                <a href="#sitemap">Sitemap</a>
+            </div>
+            <div class="social-media">
+                <a href="#facebook">Facebook</a>
+                <a href="#twitter">Twitter</a>
+                <a href="#linkedin">LinkedIn</a>
+            </div>
+            <div class="contact-info">
+                <p>Email: <a href="mailto:abdulsaboor8166@gmail.com">abdulsaboor8166@gmail.com</a></p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

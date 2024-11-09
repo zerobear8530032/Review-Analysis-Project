@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ReviewAnalysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='aboutus.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">ReviewAnalysis</div>
+            <ul>
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li><a href="{{url_for('aboutus')}}">About Us</a></li>
+                <li><a href="{{url_for('service')}}">Services</a></li>
+                <li><a href="{{url_for('contactus')}}">Contact Us</a></li>
+                <li><a href="{{url_for('api')}}">API</a></li>
+                {%if current_user.is_authenticated%}
+                <li><a href="{{url_for('scrapper')}}">Web Scrapper</a></li>
+                <li><a href="{{url_for('logout')}}">Log out</a></li>
+                {%else%}
+                <li><a href="{{url_for('register')}}">Register</a></li>
+                <li><a href="{{url_for('login')}}">Login</a></li>
+                {%endif%}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <header>
+            <h1>About Us</h1>
+            <p>We're just a group of college students passionate about product reviews!</p>
+        </header>
+
+        <section class="mission">
+            <h2>Our Mission</h2>
+            <p>At ReviewAnalysis, our mission is simple: to help fellow students and consumers make informed decisions about products. We believe that understanding reviews can save time and money, and we want to make that process as easy as possible!</p>
+        </section>
+
+        <section class="history">
+            <h2>Our Journey</h2>
+            <p>ReviewAnalysis started as a class project in our Data Science course at JNCT College. What began as a simple idea quickly turned into a full-fledged project as we realized the need for better tools to analyze product reviews.</p>
+        </section>
+
+        <section class="team">
+            <h2>Meet Our Team</h2>
+            <div class="team-member">
+                <h3>Abdul Saboor</h3>
+                <p>Team Leader</p>
+                <p>Abdul is a dedicated student majoring in Computer Science. He enjoys leading projects and is passionate about using technology to solve everyday problems.</p>
+            </div>
+            <div class="team-member">
+                <h3>Jyoti Kalambe</h3>
+                <p>Designer</p>
+                <p>Jyoti is a creative student specializing in design. She loves crafting user-friendly interfaces and ensuring that our platform looks great!</p>
+            </div>
+            <div class="team-member">
+                <h3>Nikita Rajput</h3>
+                <p>Analyst</p>
+                <p>Nikita is an analytical thinker studying Data Science. She enjoys working with data and is excited about turning raw information into meaningful insights.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ReviewAnalysis. All rights reserved.</p>
+    </footer>
+</body>
+</html>

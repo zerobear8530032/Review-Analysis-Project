@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - Product Data Scraper</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='doc.css')}}"> <!-- Link to your CSS file for styling -->
+</head>
+<body>
+    <header>
+        <h1>API Documentation</h1>
+    </header>
+
+    <section>
+        <h2>Overview</h2>
+        <p>This API provides endpoints for scraping product data from Amazon and Flipkart. The data includes product ratings, reviews, and other information. It also provides insights based on user reviews for these products.</p>
+    </section>
+
+    <section>
+        <h2>Endpoints</h2>
+
+        <h3>/api/scrapper</h3>
+        <p>Scrape and analyze product reviews and ratings.</p>
+        <ul>
+            <li><strong>Method:</strong> GET or POST</li>
+            <li><strong>Parameters:</strong>
+                <ul>
+                    <li><code>api_key</code> (query parameter): A valid API key for authentication.</li>
+                    <li><code>url</code> (query parameter): A valid Amazon or Flipkart product URL for scraping.</li>
+                </ul>
+            </li>
+            <li><strong>Response Format:</strong> JSON</li>
+        </ul>
+
+        <h4>Success Response:</h4>
+        <pre><code>{
+  "status": "success",
+  "output": "positive",
+  "rating_dict": {
+    "5": 100,
+    "4": 0,
+    "3": 0,
+    "2": 0,
+    "1": 0
+  },
+  "percent_dict": {
+    "5": 100,
+    "4": 0,
+    "3": 0,
+    "2": 0,
+    "1": 0
+  },
+  "probability_dict": {
+    "positive": 0.99,
+    "negative": 0.01
+  }
+}</code></pre>
+
+        <h4>Error Response:</h4>
+        <pre><code>{
+  "status": "error",
+  "message": "Invalid URL",
+  "reason": "The scraper works only on Flipkart and Amazon"
+}</code></pre>
+
+        <h3>/api/product_data</h3>
+        <p>Retrieve basic product information such as title, price, and ratings.</p>
+        <ul>
+            <li><strong>Method:</strong> GET or POST</li>
+            <li><strong>Parameters:</strong>
+                <ul>
+                    <li><code>api_key</code> (query parameter): A valid API key for authentication.</li>
+                    <li><code>url</code> (query parameter): A valid Amazon or Flipkart product URL.</li>
+                </ul>
+            </li>
+            <li><strong>Response Format:</strong> JSON</li>
+        </ul>
+
+        <h4>Success Response:</h4>
+        <pre><code>{
+  "status": "success",
+  "product_data": {
+    "title": "Sample Product",
+    "price": "₹999",
+    "rating": 4.5,
+    "reviews_count": 1200
+  }
+}</code></pre>
+
+        <h4>Error Response:</h4>
+        <pre><code>{
+  "status": "error",
+  "message": "Invalid URL"
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>API Key Authentication</h2>
+        <p>Each API request requires an <code>api_key</code> to ensure authorized usage and track the API's usage.</p>
+        <ul>
+            <li><strong>Valid API Key:</strong> Should be passed as a query parameter in each request (<code>api_key=your_api_key</code>).</li>
+            <li><strong>API Key Limitations:</strong> Each API key has a usage limit, and every call to the API will increment the usage count.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Example Usage Code</h2>
+
+        <h3>Python (using requests library)</h3>
+        <pre><code>import requests
+
+def get_product_data(api_url, api_key, url):
+    params = {
+        'api_key': api_key,
+        'url': url
+    }
+    response = requests.get(api_url, params=params)
+
+ if response.status_code == 200:
+        print("Success!")
+        print(response.json())
+else:
+        print(f"Error: {response.status_code}")
+        print(response.json())
+
+# Example usage
+api_url = "http://localhost:5000/api/product_data"  # Change to your actual API URL
+api_key = "your_api_key_here"
+url = "https://www.amazon.in/Apple-iPhone-13-128GB-Midnight/dp/B09G9HD6PD"  # Example product URL
+
+get_product_data(api_url, api_key, url)
+</code></pre>
+
+        <h3>Java (using HttpURLConnection)</h3>
+        <pre><code>import java.net.*;
+import java.io.*;
+
+public class ApiRequest {
+
+    public static void main(String[] args) {
+        try {
+            String apiUrl = "http://localhost:5000/api/product_data";  // Change to your actual API URL
+            String apiKey = "your_api_key_here";
+            String url = "https://www.amazon.in/Apple-iPhone-13-128GB-Midnight/dp/B09G9HD6PD";  // Example product URL
+
+            URL urlObj = new URL(apiUrl + "?api_key=" + apiKey + "&url=" + URLEncoder.encode(url, "UTF-8"));
+            HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
+            connection.setRequestMethod("GET");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            System.out.println("Response: " + response.toString());
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+</code></pre>
+
+        <h3>JavaScript (using fetch API)</h3>
+        <pre><code>function getProductData(apiUrl, apiKey, url) {
+    const params = new URLSearchParams({
+        api_key: apiKey,
+        url: url
+    });
+
+    fetch(apiUrl + "?" + params.toString())
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                console.log("Product Data:", data.product_data);
+            } else {
+                console.log("Error:", data.message);
+            }
+        })
+        .catch(error => console.error("Error:", error));
+}
+
+// Example usage
+const apiUrl = "http://localhost:5000/api/product_data";  // Change to your actual API URL
+const apiKey = "your_api_key_here";
+const url = "https://www.amazon.in/Apple-iPhone-13-128GB-Midnight/dp/B09G9HD6PD";  // Example product URL
+
+getProductData(apiUrl, apiKey, url);
+</code></pre>
+    </section>
+
+    <section>
+        <h2>API Response Example</h2>
+
+        <h3>/api/scrapper Response Example:</h3>
+        <pre><code>{
+  "status": "success",
+  "output": "positive",
+  "rating_dict": {
+    "5": 100,
+    "4": 0,
+    "3": 0,
+    "2": 0,
+    "1": 0
+  },
+  "percent_dict": {
+    "5": 100,
+    "4": 0,
+    "3": 0,
+    "2": 0,
+    "1": 0
+  },
+  "probability_dict": {
+    "positive": 0.99,
+    "negative": 0.01
+  }
+}</code></pre>
+
+        <h3>/api/product_data Response Example:</h3>
+        <pre><code>{
+  "status": "success",
+  "product_data": {
+    "title": "Sample Product",
+    "price": "₹999",
+    "rating": 4.5,
+    "reviews_count": 1200
+  }
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>Error Handling</h2>
+        <p>In case of an error (e.g., invalid URL or API key), the response will look like this:</p>
+        <pre><code>{
+  "status": "error",
+  "message": "Invalid URL",
+  "reason": "The scraper works only on Flipkart and Amazon"
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>Usage Limits</h2>
+        <p>Each API key has a usage counter that increments with every API call. Users can monitor the number of requests made through the API key by checking the usage count in the database.</p>
+    </section>
+
+    <section>
+        <h2>Conclusion</h2>
+        < p>This API allows you to retrieve product and review data from Amazon and Flipkart using the provided endpoints. You can authenticate using an API key and retrieve product information or analyze product reviews based on the provided URL.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Product Data Scraper API Documentation</p>
+    </footer>
+</body>
+</html>

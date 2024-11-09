@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - ReviewAnalysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='contactus.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">ReviewAnalysis</div>
+            <ul>
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li><a href="{{url_for('aboutus')}}">About Us</a></li>
+                <li><a href="{{url_for('service')}}">Services</a></li>
+                <li><a href="{{url_for('contactus')}}">Contact Us</a></li>
+                <li><a href="{{url_for('api')}}">API</a></li>
+                {%if current_user.is_authenticated%}
+                <li><a href="{{url_for('scrapper')}}">Web Scrapper</a></li>
+                <li><a href="{{url_for('logout')}}">Log out</a></li>
+                {%else%}
+                <li><a href="{{url_for('register')}}">Register</a></li>
+                <li><a href="{{url_for('login')}}">Login</a></li>
+                {%endif%}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <header>
+            <h1>Contact Us</h1>
+            <p>We'd love to hear from you! Please fill out the form below.</p>
+        </header>
+        <div class="content-section">
+            {% with messages=get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{message }}
+                    </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+              </div>
+          
+        <form action="" method="POST">
+            {{form.hidden_tag()}}
+            <div class="form-group">
+                <label for="name">Name:</label>
+                    {% if form.name.errors %}
+                    {{form.name(placeholder="Enter Your Name")}}
+                    <div class="invalid-feedback">
+                      {% for error in form.email.errors %}
+                      <span>{{error}}</span>
+                      {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.name(placeholder="Enter Your Name")}}
+                    {% endif %}      
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                    {% if form.email.errors %}
+                    {{form.email(placeholder="Enter Your Email")}}
+                    <div class="invalid-feedback">
+                      {% for error in form.email.errors %}
+                      <span>{{error}}</span>
+                      {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.email(placeholder="Enter Your Email")}}
+                    {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                    {% if form.message.errors %}
+                    {{form.message(placeholder="Enter Your Message")}}
+                    <div class="invalid-feedback">
+                      {% for error in form.message.errors %}
+                      <span>{{error}}</span>
+                      {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.message(id="message",placeholder="Enter Your Message")}}
+                    {% endif %}
+            </div>
+            {{form.submit(id="button")}}
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ReviewAnalysis. All rights reserved.</p>
+    </footer>
+</body>
+</html>

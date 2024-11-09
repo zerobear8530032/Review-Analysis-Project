@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API List</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='manageapi.css')}}"> <!-- Link to the CSS file -->
+</head>
+<body>
+
+
+    <div class="container">
+        {% if user_api %}
+
+        <h1>API List</h1>
+
+
+        <table>
+            <div class="content-section">
+                {% with messages=get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>          
+            <thead>  
+                <tr>
+                    <th>ID</th>
+                    <th>API KEY</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for  row in user_api%}
+                <tr>
+                    <td>{{row.id}}</td>
+                    <td>{{row.api_key}}</td>
+                    <td>{{row.status}}</td>
+                    <td>
+                        <form action="{{ url_for('deleteapi', id=row.id) }}" method='POST' style="display:inline;">
+                            {{form.hidden_tag()}}
+                            {{form.submit(class="delete-button",label="Delete")}}
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+        </table>
+        {%else%}
+        <p>Currently You Have No Active API KEY </p>
+        {%endif%}
+
+        <a id ="generateapi" href="{{url_for('api')}}">Create API </a>
+    </div>
+
+
+    <nav class="navbar">
+        <h3>Navigation</h3>
+        <a href="{{url_for('home')}}">Home</a>
+        <a href="{{url_for('manageapi')}}">API Keys</a>
+        <a href="{{url_for('api')}}">Generate API</a>
+        <a href="{{url_for('document')}}">Documentation</a>
+        <a href="{{url_for('service')}}">Services</a>
+    </nav>
+</body>
+</html>

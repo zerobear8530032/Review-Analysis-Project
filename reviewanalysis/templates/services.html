@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - ReviewAnalysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='service.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">ReviewAnalysis</div>
+            <ul>
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li><a href="{{url_for('aboutus')}}">About Us</a></li>
+                <li><a href="{{url_for('service')}}">Services</a></li>
+                <li><a href="{{url_for('contactus')}}">Contact Us</a></li>
+                <li><a href="{{url_for('api')}}">API</a></li>
+                {%if current_user.is_authenticated%}
+                <li><a href="{{url_for('scrapper')}}">Web Scrapper</a></li>
+                <li><a href="{{url_for('logout')}}">Log out</a></li>
+                {%else%}
+                <li><a href="{{url_for('register')}}">Register</a></li>
+                <li><a href="{{url_for('login')}}">Login</a></li>
+                {%endif%}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <header>
+            <h1>Our Services</h1>
+            <p>A web scraping service designed to analyze product reviews and provide insights.</p>
+        </header>
+
+        <section class="overview">
+            <h2>Project Overview</h2>
+            <p>Our service allows users to input product URLs from supported e-commerce sites (like Flipkart and Amazon). We extract and process reviews to determine product sentiment (positive, negative, or neutral).</p>
+        </section>
+
+        <section class="features">
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>Web Scraping:</strong> Efficiently scrapes product reviews, ratings, and other relevant data from major e-commerce platforms.</li>
+                <li><strong>Sentiment Analysis:</strong> Uses machine learning models (e.g., logistic regression) to analyze and classify the sentiment of user reviews.</li>
+                <li><strong>Data Visualization:</strong> Presents the analysis results with visually appealing graphs and charts.</li>
+                <li><strong>API Integration:</strong> Provides an API for programmatic access to the service, allowing users to automate the analysis of reviews.</li>
+                <li><strong>Custom Error Handling:</strong> Built-in error handling to manage invalid URLs and missing data.</li>
+                <li><strong>Contact Us Feature:</strong> Allows users to reach out for support or inquiries.</li>
+            </ul>
+        </section>
+
+        <section class="how-it-works">
+            <h2>How It Works</h2>
+            <ol>
+                <li>Users input the product URL from supported websites.</li>
+                <li>The system scrapes the product details, including reviews and ratings.</li>
+                <li>The system analyzes the reviews using a sentiment analysis model.</li>
+                <li>Results are displayed with visualizations such as graphs and sentiment distributions.</li>
+                <li>Option to access the data and analysis through the provided API for integration into other applications.</li>
+            </ol>
+        </section>
+
+        <section class="benefits">
+            <h2>Benefits</h2>
+            <ul>
+                <li><strong>Time-Saving:</strong> Automates the process of analyzing product reviews, saving users time and effort.</li>
+                <li><strong>Data-Driven Decisions:</strong> Helps businesses and consumers make informed decisions based on sentiment and product feedback.</li>
+                <li><strong>Customizable API:</strong> Allows for flexible use cases by integrating the service into other applications.</li>
+                <li><strong>User-Friendly Interface:</strong> Easy-to-use platform where users can quickly input URLs and view the analysis results.</li>
+            </ul>
+        </section>
+
+        <section class="target-audience">
+            <h2>Target Audience</h2>
+            <ul>
+                <li><strong>E-commerce Businesses:</strong> Can use the service to understand customer feedback and improve their products or services.</li>
+                <li><strong>Consumers:</strong> Helps individuals make informed buying decisions based on the sentiments expressed in product reviews.</li>
+                <li><strong>Developers:</strong> Offers an API for those who wish to integrate review analysis into their own platforms or projects.</li>
+            </ul>
+        </section>
+
+        <section class="why-choose-us">
+            <h2>Why Choose Us</h2>
+            <ul>
+                <li><strong>Reliable Data:</strong> We scrape data from trusted e-commerce platforms to ensure accurate and up-to-date information.</li>
+                <li><strong>Scalable and Secure:</strong> Our system is designed to handle multiple users and requests efficiently.</li>
+                <li><strong>Comprehensive Support:</strong> Dedicated support for any questions or issues, with a simple and accessible contact system.</li>
+            </ul>
+        </section>
+
+        <section class="contact-us">
+            <h2>Contact Us</h2>
+            <p>For feedback, inquiries, or technical support, please use our easy-to-use contact form. We promise prompt and helpful responses to ensure you get the assistance you need.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ReviewAnalysis. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,89 @@
+/* General Styles */
+body {
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text */
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    background-color: #1e1e1e; /* Slightly lighter background for header */
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+h1, h2, h3, h4 {
+    color: #ffffff; /* White headers */
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h2 {
+    font-size: 2em;
+    margin-top: 20px;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-top: 15px;
+}
+
+h4 {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* Section Styles */
+section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #1e1e1e; /* Dark background for sections */
+    border-radius: 5px;
+}
+
+/* List Styles */
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Code Block Styles */
+pre {
+    background-color: #272727; /* Dark background for code blocks */
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 10px;
+    overflow-x: auto; /* Allow horizontal scrolling */
+}
+
+code {
+    color: #66d9ef; /* Light blue for inline code */
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    background-color: #1e1e1e;
+    border-top: 1px solid #333;
+}
+
+/* Link Styles */
+a {
+    color: #66d9ef; /* Light blue for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline; /* Underline on hover */
+}

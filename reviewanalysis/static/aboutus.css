@@ -1,0 +1,111 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif; /* Font family */
+    background-color: #121212; /* Dark background for the body */
+    color: #e0e0e0; /* Light text color */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #1e1e1e; /* Dark background for header */
+    padding: 20px 0; /* Padding for header */
+}
+
+.navbar {
+    display: flex; /* Flexbox for navigation */
+    justify-content: space-between; /* Space between logo and links */
+    align-items: center; /* Center items vertically */
+    max-width: 1200px; /* Max width for the navbar */
+    margin: 0 auto; /* Center navbar */
+    padding: 0 20px; /* Padding for navbar */
+}
+
+.logo {
+    font-size: 1.8em; /* Logo font size */
+    color: #4a90e2; /* Logo color */
+}
+
+.navbar ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    display: flex; /* Flexbox for navigation links */
+    gap: 20px; /* Space between links */
+}
+
+.navbar a {
+    text-decoration: none; /* Remove underline from links */
+    color: #b0bec5; /* Link color */
+    transition: color 0.3s; /* Smooth color transition */
+}
+
+.navbar a:hover {
+    color: #4a90e2; /* Change color on hover */
+}
+
+/* Container Styles */
+.container {
+    max-width: 800px; /* Max width for content */
+    margin: 50px auto; /* Center container */
+    padding: 20px; /* Padding for container */
+    background-color: #1e1e1e; /* Dark background for container */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+}
+
+/* Header Styles */
+header h1 {
+    font-size: 2.5em; /* Larger font size for main title */
+    color: #4a90e2; /* Main color */
+    margin-bottom: 10px; /* Space below title */
+}
+
+header p {
+    color: #b0bec5; /* Light grey for subtitle */
+    font-size: 1.2em; /* Increased font size */
+}
+
+/* Section Styles */
+section {
+    margin-bottom: 30px; /* Space between sections */
+}
+
+section h2 {
+    font-size: 1.8em; /* Font size for section titles */
+    color: #4a90e2; /* Main color */
+    margin-bottom: 10px; /* Space below section title */
+}
+
+section p {
+    color: #e0e0e0; /* Light text color */
+    font-size: 1em; /* Standard font size for paragraphs */
+    line-height: 1.6; /* Improved line height for readability */
+}
+
+/* Team Section Styles */
+.team {
+    display: flex;
+    flex-direction: column; /* Stack team members vertically */
+    gap: 20px; /* Space between team members */
+}
+
+.team-member {
+    background-color: #2c2c2c; /* Dark background for team member cards */
+    padding: 15px; /* Padding for better spacing */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+}
+
+.team-member h3 {
+    color: #4a90e2; /* Main color for team member names */
+    margin-bottom: 5px; /* Space below names */
+}
+
+/* Footer Styles */
+footer {
+    margin-top: 20px; /* Space above footer */
+    padding: 10px 0; /* Padding for footer */
+    background-color: #1e1e1e; /* Dark background for footer */
+    text-align: center; /* Centered text */
+    color: #888; /* Light grey for footer text */
+}
