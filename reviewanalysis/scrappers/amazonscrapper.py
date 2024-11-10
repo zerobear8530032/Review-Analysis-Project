@@ -32,11 +32,22 @@ class AmazonScrapper:
         return tld.domain
     def get_source_code(self,url:str)->str:
         """this function will get url and return source code in str to parse of the url"""
-        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36",
-                    "Accept-Language": "en-US,en;q=0.9",
-                    "Referer": "https://www.flipkart.com/",
-                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-                    "Connection": "keep-alive"}
+        headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": "https://www.flipkart.com/",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Connection": "keep-alive",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Cache-Control": "max-age=0",
+        "Accept-Charset": "UTF-8,*;q=0.5",
+        "DNT": "1",
+        "TE": "Trailers",
+        "Upgrade-Insecure-Requests": "1",
+        "Origin": "https://www.flipkart.com",
+        "X-Requested-With": "XMLHttpRequest",
+        }
+
         try :
             sourcecode= requests.get(url,headers=headers).text
             return sourcecode
@@ -261,7 +272,13 @@ class AmazonScrapper:
     def combineparameter(self,model,overall,reviewstxt,helpful:list,vectorizer_review,tfidf_review):
         """this function will preprocess data and give the output to be feed to the model"""
         pre_processed_data=[self.applydatapreprocessing(x,vectorizer_review,tfidf_review) for x in reviewstxt]
-        inputs=[hstack([overall,helpful[i],data]) for i,data in enumerate(pre_processed_data)]
+        # inputs=[hstack([overall,helpful,pre_processed_data[i]]) for i,data in enumerate(helpful)]
+        inputs=[]
+        for i,data in enumerate(pre_processed_data):
+            if i>=len(helpful):
+                break
+            inputs.append(hstack([overall,helpful[i],data]))
+
         return inputs
     def find_probability(self,model,inputs):
         probabilities = [model.predict_proba(input) for input in inputs]

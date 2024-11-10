@@ -54,11 +54,6 @@
                     {{ form.product_link(class="input", placeholder="Paste product link here...") }}
                     {{ form.submit(class="button ") }}
                 </div>
-                <div class="invalid-feedback">
-                    {% for error in form.product_link.errors %}
-                    <span>{{error}}</span>
-                    {% endfor %}
-                </div>       
             </form>
         </main>
         <section class="output">

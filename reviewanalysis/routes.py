@@ -1,6 +1,6 @@
 import secrets
 import pickle
-import shutil
+import traceback
 from datetime import datetime
 import os
 import json
@@ -22,7 +22,7 @@ def register():
     if form.validate_on_submit():
         print("Form validation successful!")  # Add a print statement to check if form validation is successful
         hashed = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
-        userdata = Registertable(username=form.username.data, email=form.email.data, password=hashed,api_count=0)
+        userdata = Registertable(username=form.username.data.lower(), email=form.email.data.lower(), password=hashed,api_count=0)
         db.session.add(userdata)
         db.session.commit()
         flash("Your account is created and you can login now!", 'success')
@@ -41,7 +41,7 @@ def login():
          return redirect(url_for('home'))
     form=LoginForm()
     if form.validate_on_submit():
-            userdata=Registertable.query.filter_by(email=form.email.data).first()
+            userdata=Registertable.query.filter_by(email=form.email.data.lower()).first()
             if(userdata and bcrypt.check_password_hash(userdata.password,form.password.data)):
                  login_user(userdata,remember=form.remember.data)
                  next_page=request.args.get('next')
@@ -223,6 +223,7 @@ def scrapper():
         # Fetch source code and parse
         sourcecode = amazon.get_source_code(url)
         soup = amazon.get_soup_code(sourcecode)
+        error=""
         
         try:
             # Process based on domain
@@ -230,6 +231,7 @@ def scrapper():
                 # Amazon-specific functions
                 total = amazon.findtotalreviewsNumber(soup)
                 text_percentages = amazon.findReviewsPercentages(soup)
+                error="text_percetage"   
                 int_percentages = amazon.convertPercentageToInt(text_percentages)
                 avg_rating = amazon.findavgrating(total, int_percentages)
                 rating_number = amazon.getAllRatingNumber(total=total, percentages=int_percentages)
@@ -261,9 +263,12 @@ def scrapper():
                                    rating_dict=rating_dict, per_dict=per_dict, prob_dict=prob_dict)
         
         except Exception as e:
-            flash(f"The web page does not contain sufficient data for analysis{e}", "warning")
+            print(f"Exception: {e}")
+            print("Traceback:")
+            traceback.print_exc() 
+            flash(f"The web page does not contain sufficient data for analysis {e}", "warning")
             return render_template("webscrapper.html", form=form,
-                                   error="Sorry for the inconvenience, but the provided link does not have the required data for analysis")
+                                   error=f"Sorry for the inconvenience, but the provided link does not have the required data for analysis {e}")
     
     # If form is not validated or no link is submitted
     return render_template("webscrapper.html", form=form)
