@@ -89,6 +89,8 @@ class FlipKartScrapper:
         """get the number of reviews in a list"""        
         reviewstags= soup.find("ul",class_="+psZUR")
         if reviewstags==None:
+            reviewstags= soup.find("ul",class_="lpANVI")
+        if reviewstags==None:
             raise ValueError("cannot found Enough review comments to analyze product")
         reviewsnumber=reviewstags.find_all("li",class_="fQ-FC1")
         return [self.converttonumber(review.text) for review in reviewsnumber]
@@ -222,7 +224,7 @@ class FlipKartScrapper:
             if x==-1:
                 neg+=1
         if pos==0 and neg==0 and neu==0:
-            return "not enough data found for analysis"
+            raise  ValueError
         if(pos>neg and pos>neu):
             return "Positive" 
         elif(neg>pos and neg>neu):

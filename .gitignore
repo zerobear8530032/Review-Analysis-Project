@@ -5,7 +5,7 @@ __pycache__/
 
 
 # Data Sets
-notebooks/reviews_Baby_5.json
+notebooks/dataset/reviews_Baby_5.json
 
 # C extensions
 *.so

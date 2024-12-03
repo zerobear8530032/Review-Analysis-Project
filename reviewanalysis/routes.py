@@ -303,9 +303,8 @@ def api():
 @app.route("/api/manageapi", methods=['POST', 'GET'])
 @login_required
 def manageapi():
-    user_api=APItable.query.all()
+    user_api=APItable.query.filter_by(user_id=current_user.id)
     form= DeleteAPI()
-    
     return render_template("manageapi.html",user_api=user_api,form=form)
 @app.route("/api/manageapi/delete<int:id>", methods=["POST", "GET"])
 @login_required

@@ -177,7 +177,15 @@ class AmazonScrapper:
     def getHelpFull(self,soup):
         """extract helpfullness of reviews"""
         helpfultxt=[x.text for x in soup.find_all("span",{"data-hook":"helpful-vote-statement"})]
-        return [int(x.split()[0]) for x in helpfultxt]
+        ans=[]
+        for x in helpfultxt:
+            splitxt=x.split()[0]
+            if splitxt.isnumeric():
+                ans.append(int(splitxt))
+            else:
+                ans.append(0)
+        return ans
+
     def getHelpFullness(self,soup,total:int):
         return [(x/total)*100 for x in self.getHelpFull(soup)]
     
@@ -247,7 +255,7 @@ class AmazonScrapper:
             if x==-1:
                 neg+=1;
         if pos==0 and neg==0 and neu==0:
-            return "not enough data found for analysis"
+            raise  ValueError
         if(pos>neg and pos>neu):
             return "Positive" 
         elif(neg>pos and neg>neu):
