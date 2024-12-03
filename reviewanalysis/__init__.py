@@ -5,17 +5,12 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from reviewanalysis.scrappers import AmazonScrapper
 from reviewanalysis.scrappers import FlipKartScrapper
-# from pyngrok import ngrok
 app = Flask(__name__)
-# ngrok.set_auth_token("2ocsOkAtir0rfQIM3f6cdYVQNfZ_3MVnEmcdLzhSETy5yu7gW")
-# public_url=ngrok.connect(5000).public_url
-# print(public_url)
 app.config["SECRET_KEY"] = "9e166102899e65f779885fafe818473a"
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 db = SQLAlchemy(app)
 bcrypt =Bcrypt(app)
 login_manager = LoginManager(app)
-# Importing routes after creating the Flask app instance
 login_manager.login_view='login'
 login_manager.login_message_category='info'
 app.config['MAIL_SERVER']="smtp.googlemail.com"
