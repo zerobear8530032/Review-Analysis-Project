@@ -1,5 +1,5 @@
 from datetime import datetime
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous.url_safe import URLSafeTimedSerializer  # Add this import
 from reviewanalysis import db, login_manager, app
 from flask_login import UserMixin
 
@@ -14,21 +14,37 @@ class Registertable(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     api_count = db.Column(db.Integer, default=0)
     
+    # def get_reset_token(self, expires_sec=1800):
+    #     print(f"SECRET_KEY: {app.config['SECRET_KEY']} (Type: {type(app.config['SECRET_KEY'])})")
+    #     s = Serializer(app.config['SECRET_KEY'].decode('utf-8'), expires_sec)  # Decode bytes to string
+    #     return s.dumps({'user_id': self.id}).decode('utf-8')
+
+    # @staticmethod
+    # def verify_reset_token(token):
+    #     s = Serializer(app.config['SECRET_KEY'])
+    #     try:
+    #         user_id = s.loads(token)['user_id']
+    #     except:
+    #         return None
+    #     return Registertable.query.get(user_id)
+    # def __repr__(self):
+    #     return f"User('{self.username}', '{self.email}',{self.api_count})"
+    # Decode the byte strings into regular strings
+    SECRET_KEY = app.config["SECRET_KEY"].decode('utf-8')
+    SALT = app.config["SALT"].decode('utf-8')
+
     def get_reset_token(self, expires_sec=1800):
-        print(f"SECRET_KEY: {app.config['SECRET_KEY']} (Type: {type(app.config['SECRET_KEY'])})")
-        s = Serializer(app.config['SECRET_KEY'].decode('utf-8'), expires_sec)  # Decode bytes to string
-        return s.dumps({'user_id': self.id}).decode('utf-8')
+        s = URLSafeTimedSerializer(self.SECRET_KEY)
+        return s.dumps({'user_id': self.id}, salt=self.SALT)
 
     @staticmethod
     def verify_reset_token(token):
-        s = Serializer(app.config['SECRET_KEY'])
+        s = URLSafeTimedSerializer(Registertable.SECRET_KEY)
         try:
-            user_id = s.loads(token)['user_id']
-        except:
-            return None
+            user_id = s.loads(token, salt=Registertable.SALT, max_age=1800)['user_id']
+        except Exception:
+            return None  # Token expired or invalid
         return Registertable.query.get(user_id)
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}',{self.api_count})"
 
 
 class APItable(db.Model, UserMixin):

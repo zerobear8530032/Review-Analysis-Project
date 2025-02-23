@@ -12,6 +12,7 @@ public_url=""
 public_url=ngrok.connect(5000).public_url
 print(public_url)
 app.config["SECRET_KEY"] = b"9e166102899e65f779885fafe818473a"
+app.config["SALT"] = b"0fa2ed81e1e8a1e98da72ce5a2b5fef3"
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 db = SQLAlchemy(app)
 bcrypt =Bcrypt(app)
