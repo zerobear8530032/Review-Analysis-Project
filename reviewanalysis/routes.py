@@ -12,6 +12,7 @@ from reviewanalysis.models import Registertable,APItable,ContactUstable
 from flask_login import login_user,current_user,logout_user,login_required
 from flask_mail import Message
 from flask import jsonify,session
+from reviewanalysis import public_url
 
 
 @app.route("/register", methods=['POST', 'GET'])
@@ -51,17 +52,6 @@ def login():
             else:     
                 flash('Wrong Email Entered',"danger")
     return render_template("login.html",title="Login",form=form)
-def save_picture(form_picture):
-    random_hex=secrets.token_hex(8)
-    _,f_ext=os.path.splitext(form_picture.filename)
-    picture_fn=random_hex+f_ext
-    picture_path=os.path.join(app.root_path,'static/pictures',picture_fn)
-    output_size=(125,125)
-    i=Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-    
-    return picture_fn
 
 @app.route("/aboutus")
 def aboutus():
@@ -91,9 +81,23 @@ def logout():
 def send_reset_email(user):
     token=user.get_reset_token()
     msg=Message('Password Reset Request',sender="saboorabdul627@gmail.com",recipients=[user.email])
-    msg.body=f''' to Rese your password visit the following link :
-http://127.0.0.1:5000/{url_for('reset_token',token=token,external=True)}   
-if you did not request reset then ignore this email'''
+    if public_url=="":
+        msg.body=f''' to Rese your password visit the following link :
+    http://127.0.0.1:5000/{url_for('reset_token',token=token,external=True)}   
+    if you did not request reset then ignore this email
+     
+    alternative link http://192.168.100.226:5000/{url_for("reset_token",token=token,external=True)}
+    localhost  link http://localhost:5000/{url_for("reset_token",token=token,external=True)}
+    '''
+    elif len(public_url)>0:
+        msg.body=f''' to Rese your password visit the following link :
+    {public_url}{url_for('reset_token',token=token,external=True)}   
+    if you did not request reset then ignore this email
+    alternative link http://192.168.100.226:5000/{url_for("reset_token",token=token,external=True)}
+    localhost  link http://localhost:5000/{url_for("reset_token",token=token,external=True)}
+   '''
+    
+
     mail.send(msg)
 
 

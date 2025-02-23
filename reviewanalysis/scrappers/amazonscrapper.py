@@ -11,7 +11,7 @@ import os
 import base64
 import io
 import tldextract
-from scipy.sparse import hstack
+from scipy.sparse import hstack,csr_matrix
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
@@ -189,17 +189,17 @@ class AmazonScrapper:
     def getHelpFullness(self,soup,total:int):
         return [(x/total)*100 for x in self.getHelpFull(soup)]
     
-    def load_model(self,path="picklefiles/logisticregression.pkl"):
+    def load_model(self,path="reviewanalysis/scrappers/logisticregression.pkl"):
         """load the model """
         with open(path, 'rb') as model_file:
             model = pickle.load(model_file)
             return model
-    def load_vec(self,path="picklefiles/vectorizer_review.pkl"):
+    def load_vec(self,path="reviewanalysis/scrappers/vectorizer_review.pkl"):
         """load the vectorizer """
         with open(path, 'rb') as review_vec_file:
             vectorizer_review = pickle.load(review_vec_file)
             return vectorizer_review
-    def load_tfidf(self,path="picklefiles/tfidf_review.pkl"):
+    def load_tfidf(self,path="reviewanalysis/scrappers/tfidf_review.pkl"):
         """load the tfidc vectorizer """
         with open(path, 'rb') as tfidf_review_file:
             tfidf_review = pickle.load(tfidf_review_file)
@@ -277,15 +277,31 @@ class AmazonScrapper:
             for x,y in zip(lables,values):
                 ans.append({"label":x, "value":y})
             return ans
-    def combineparameter(self,model,overall,reviewstxt,helpful:list,vectorizer_review,tfidf_review):
-        """this function will preprocess data and give the output to be feed to the model"""
-        pre_processed_data=[self.applydatapreprocessing(x,vectorizer_review,tfidf_review) for x in reviewstxt]
-        # inputs=[hstack([overall,helpful,pre_processed_data[i]]) for i,data in enumerate(helpful)]
-        inputs=[]
-        for i,data in enumerate(pre_processed_data):
-            if i>=len(helpful):
+    def combineparameter(self, model, overall, reviewstxt, helpful: list, vectorizer_review, tfidf_review):
+        """This function preprocesses data and prepares input for the model."""
+        
+        # Convert overall rating to a sparse matrix if it's a scalar
+        overall_sparse = csr_matrix([[overall]]) if isinstance(overall, (int, float)) else overall
+        
+        # Preprocess the reviews
+        pre_processed_data = [
+            self.applydatapreprocessing(x, vectorizer_review, tfidf_review) for x in reviewstxt
+        ]
+
+        inputs = []
+        
+        for i, data in enumerate(pre_processed_data):
+            if i >= len(helpful):
                 break
-            inputs.append(hstack([overall,helpful[i],data]))
+            
+            # Convert helpful[i] to sparse if it's a scalar
+            helpful_sparse = csr_matrix([[helpful[i]]]) if isinstance(helpful[i], (int, float)) else helpful[i]
+            
+            # Ensure data is also in sparse format
+            data_sparse = csr_matrix(data) if isinstance(data, (int, float)) else data
+
+            # Stack the matrices
+            inputs.append(hstack([overall_sparse, helpful_sparse, data_sparse]))
 
         return inputs
     def find_probability(self,model,inputs):

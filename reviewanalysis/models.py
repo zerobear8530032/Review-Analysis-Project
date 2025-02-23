@@ -14,9 +14,9 @@ class Registertable(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     api_count = db.Column(db.Integer, default=0)
     
-
     def get_reset_token(self, expires_sec=1800):
-        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        print(f"SECRET_KEY: {app.config['SECRET_KEY']} (Type: {type(app.config['SECRET_KEY'])})")
+        s = Serializer(app.config['SECRET_KEY'].decode('utf-8'), expires_sec)  # Decode bytes to string
         return s.dumps({'user_id': self.id}).decode('utf-8')
 
     @staticmethod
@@ -27,9 +27,8 @@ class Registertable(db.Model, UserMixin):
         except:
             return None
         return Registertable.query.get(user_id)
-
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}',{self.api_count})"
+        return f"User('{self.username}', '{self.email}',{self.api_count})"
 
 
 class APItable(db.Model, UserMixin):

@@ -27,7 +27,7 @@
       <div class="row">
         <i class="fas fa-envelope"></i>
         {% if form.email.errors %}
-        {{form.password(placeholder="Enter Your Email")}}
+        {{form.email(placeholder="Enter Your Email")}}
         <div class="invalid-feedback">
           {% for error in form.email.errors %}
           <span>{{error}}</span>
